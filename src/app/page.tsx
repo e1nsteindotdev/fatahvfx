@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div id={"my-work"} className="grid lg:grid-cols-2 gap-8 lg:gap-[18px]">
+      <div id={"my-work"} className="flex flex-col gap-8 lg:gap-[18px]">
         {!categories ? (
           // Loading state
           <div className="col-span-2 flex items-center justify-center py-20">

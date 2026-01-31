@@ -44,7 +44,7 @@ export function Category({
     <div
       id={categoryId}
       className={twMerge(
-        "flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[24px] lg:py-8 lg:px-[48px] rounded-[24px] bg-[#101924]",
+        "flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[32px] lg:py-8 lg:px-[64px] rounded-[24px] bg-[#101924]",
         className
       )}
     >
@@ -56,14 +56,14 @@ export function Category({
           <p className="text-[12px] lg:text-[16px] text-wrap">{desc}</p>
         </div> */}
       </div>
-      <Carousel className="w-3/4 lg:w-full max-w-xs">
-        <CarouselContent>
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-6">
           {videoUrls.map((url, index) => {
             return (
-              <CarouselItem key={index} className="">
-                <div className="p-1">
+              <CarouselItem key={index} className="pl-6 basis-full md:basis-1/3">
+                <div className="aspect-[9/16] md:aspect-[9/16]">
                   <video
-                    className="w-full border-[2px] border-[#008CFF]/50 rounded-[8px] shadow-lg flex-1 object-cover"
+                    className="w-full h-full rounded-[24px] shadow-lg object-cover"
                     controls
                     poster={url.thumbnail}
                   >
