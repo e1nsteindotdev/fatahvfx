@@ -7,9 +7,9 @@ export function VSL() {
         <video
           className="w-full rounded-[24px] flex-1"
           controls
-          poster="images/vsl-thumbnail.png"
+          poster="main-vsl-thumbnail.png"
         >
-          <source src="/videos/main-vsl.mp4" type="video/mp4" />
+          <source src="/main-vsl.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
