@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export function Socials() {
   return (
-    <div className="gap-[26px] py-[42px] px-[20px]  bg-[#141518] rounded-[18px] flex-1">
-      <div className="flex flex-col gap-6">
+    <div className="w-full py-6 px-5 bg-[#141518] rounded-[18px]">
+      <div className="flex flex-row justify-center gap-4">
         <Link
           text="Linkedin"
           imageUrl="/svgs/linkedin.svg"

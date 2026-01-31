@@ -7,7 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { CustomVideoPlayer } from "@/components/custom-video-player";
 import Image from "next/image";
+
 export function CategoryWrapper({
   children,
   className,
@@ -44,39 +46,32 @@ export function Category({
     <div
       id={categoryId}
       className={twMerge(
-        "flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[32px] lg:py-8 lg:px-[64px] rounded-[24px] bg-[#101924]",
+        "flex flex-1 flex-col justify-start items-center gap-6 lg:gap-10 py-[24px] px-[24px] lg:py-12 lg:px-[48px] rounded-[24px]",
         className
       )}
     >
-      <div className="flex items-center w-full justify-start flex-col gap-1">
-        <p className="text-[25px] text-center  text-white font-bold lg:text-[32px]">
-          {title}
-        </p>
-        {/* <div className="lg:min-h-[80px]">
-          <p className="text-[12px] lg:text-[16px] text-wrap">{desc}</p>
-        </div> */}
-      </div>
-      <Carousel className="w-full">
-        <CarouselContent className="-ml-6">
-          {videoUrls.map((url, index) => {
-            return (
-              <CarouselItem key={index} className="pl-6 basis-full md:basis-1/3">
-                <div className="aspect-[9/16] md:aspect-[9/16]">
-                  <video
-                    className="w-full h-full rounded-[24px] shadow-lg object-cover"
-                    controls
-                    poster={url.thumbnail}
-                  >
-                    <source src={url.video} type="video/mp4" />
-                    Your browser does not support the videos.
-                  </video>
-                </div>
-              </CarouselItem>
-            );
-          })}
+      <p className="text-[40px] text-center text-white font-bold lg:text-[102px] tracking-widest uppercase font-script">
+        {title}
+      </p>
+
+      <Carousel className="w-full max-w-full pl-6 pr-6">
+        <CarouselContent className={`gap-6 ${videoUrls.length <= 2 ? 'justify-center' : ''}`}>
+          {videoUrls.map((url, index) => (
+            <CarouselItem
+              key={index}
+              className={`flex justify-center basis-[95vw] md:basis-1/3 ${videoUrls.length === 1 ? 'md:basis-full' : videoUrls.length === 2 ? 'md:basis-1/2' : ''}`}
+            >
+              <div className="aspect-[9/16] md:aspect-[9/16] w-full max-w-[80vw] lg:max-w-auto">
+                <CustomVideoPlayer
+                  src={url.video}
+                  poster={url.thumbnail}
+                />
+              </div>
+            </CarouselItem>
+          ))}
         </CarouselContent>
-        <CarouselPrevious className="rounded-full text-white bg-[#008CFF] border-none" />
-        <CarouselNext className="rounded-full text-white bg-[#008CFF] border-none" />
+        <CarouselPrevious className="bg-transparent hover:bg-transparent border-none left-2 md:left-6 flex justify-start" />
+        <CarouselNext className="bg-transparent hover:bg-transparent border-none right-2 md:right-6 flex justify-end" />
       </Carousel>
     </div>
   );
@@ -128,8 +123,8 @@ export function ImagesCategory({
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="rounded-full text-white bg-[#008CFF] border-none" />
-        <CarouselNext className="rounded-full text-white bg-[#008CFF] border-none" />
+        <CarouselPrevious className="bg-transparent hover:bg-transparent border-none" />
+        <CarouselNext className="bg-transparent hover:bg-transparent border-none" />
       </Carousel>
     </div>
   );

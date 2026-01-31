@@ -16,14 +16,14 @@ export function Main() {
           Hello! <br /> I am Fatah{" "}
         </p>
         <Image
-          className="absolute z-10 right-[-20px] phone:right-[-60px] top-[-10px] phone:top-[-20px] lg:w-[220px] w-[140px] phone:w-[160px] "
-          src={"/images/fatah.png"}
+          className="absolute z-10 right-[-20px] phone:right-[-60px] top-[-10px] phone:top-[-90px] lg:w-[220px] w-[140px] phone:w-[160px] "
+          src={"/fatah-face.png"}
           width={187}
           height={215}
           alt={"fatah pic"}
         />
       </div>
-      <p className="text-[13px] lg:text-[18px]  ">
+      <p className="text-[13px] lg:text-[18px] z-20 ">
         A versatile video editor with a passion for storytelling through
         visuals. Skilled in transforming raw footage into polished, content
         across various formats.

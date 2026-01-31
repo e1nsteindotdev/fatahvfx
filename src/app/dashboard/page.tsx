@@ -6,7 +6,6 @@ import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Trash2, Plus, Upload, LogOut, Video, Folder } from "lucide-react";
 
@@ -19,7 +18,6 @@ export default function DashboardPage() {
   const removeVideo = useMutation(api.video.remove);
 
   const [newCategoryTitle, setNewCategoryTitle] = useState("");
-  const [newCategoryDesc, setNewCategoryDesc] = useState("");
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [uploadingCategoryId, setUploadingCategoryId] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<{ categoryId: string, progress: number, stage: string } | null>(null);
@@ -35,11 +33,9 @@ export default function DashboardPage() {
       setIsCreatingCategory(true);
       await createCategory({
         title: newCategoryTitle.trim(),
-        description: newCategoryDesc.trim() || undefined,
       });
       toast.success("Category created successfully!");
       setNewCategoryTitle("");
-      setNewCategoryDesc("");
     } catch (error) {
       toast.error("Failed to create category");
       console.error(error);
@@ -150,12 +146,6 @@ export default function DashboardPage() {
               onChange={(e) => setNewCategoryTitle(e.target.value)}
               className="flex-1 text-black"
             />
-            <Textarea
-              placeholder="Description (optional)"
-              value={newCategoryDesc}
-              onChange={(e) => setNewCategoryDesc(e.target.value)}
-              className="flex-1 min-h-[40px] text-black"
-            />
             <Button
               onClick={handleCreateCategory}
               disabled={isCreatingCategory}
@@ -238,9 +228,6 @@ function CategoryCard({
       <div className="p-6 border-b border-gray-200 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-900">{category.title}</h3>
-          {category.description && (
-            <p className="text-sm text-gray-600 mt-1">{category.description}</p>
-          )}
         </div>
         <div className="flex items-center gap-2">
           <input

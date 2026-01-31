@@ -7,7 +7,6 @@ import {
 } from "@/components/categories/category-wrapper";
 import { ContactMeForm } from "@/components/contact-me";
 import { Footer } from "@/components/footer";
-import { Categories } from "@/components/hero-section/categories-scoll";
 import { CTAs } from "@/components/hero-section/cta";
 import { Main } from "@/components/hero-section/main";
 import { Socials } from "@/components/hero-section/socials";
@@ -20,22 +19,20 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col px-[16px] overflow-hidden gap-12 py-6 lg:py-10 sm:px-[200px] lg:px-[16px]">
       <div className="w-full flex flex-col xl:flex-row gap-[18px] justify-start">
-        <div className="w-full flex flex-col lg:flex-row gap-[18px] justify-start items-center lg:items-stretch">
-          <div className="gap-[18px] flex flex-col">
-            <Main />
-            <TimeZone />
-            <CTAs />
+        <div className="w-full flex flex-col gap-[18px]">
+          <div className="w-full flex flex-col lg:flex-row gap-[18px] justify-start items-center lg:items-stretch">
+            <div className="gap-[18px] flex flex-col">
+              <Main />
+              <Socials />
+              <CTAs />
+              <TimeZone />
+            </div>
+            <VSL />
           </div>
-          <VSL />
-        </div>
-
-        <div className="flex lg:flex-col gap-[18px]">
-          <Categories />
-          <Socials />
         </div>
       </div>
 
-      <div id={"my-work"} className="flex flex-col gap-8 lg:gap-[18px]">
+      <div id={"my-work"} className="flex flex-col gap-8 lg:gap-[18px] lg:py-20">
         {!categories ? (
           // Loading state
           <div className="col-span-2 flex items-center justify-center py-20">
@@ -77,16 +74,16 @@ function DynamicCategory({
 
   if (!videos) {
     return (
-      <div className="flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[24px] lg:py-8 lg:px-[48px] rounded-[24px] bg-[#101924]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#008CFF]"></div>
+      <div className="flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[24px] lg:py-8 lg:px-[48px] rounded-[24px]">
+        <p className="text-[25px] text-center text-white font-bold lg:text-[102px] uppercase font-script">{title}</p>
       </div>
     );
   }
 
   if (videos.length === 0) {
     return (
-      <div className="flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[24px] lg:py-8 lg:px-[48px] rounded-[24px] bg-[#101924]">
-        <p className="text-[25px] text-center text-white font-bold lg:text-[32px]">{title}</p>
+      <div className="flex flex-1 flex-col justify-start items-center gap-4 lg:gap-3 py-[18px] px-[24px] lg:py-8 lg:px-[48px] rounded-[24px]">
+        <p className="text-[25px] text-center text-white font-bold lg:text-[102px] uppercase font-script">{title}</p>
         <p className="text-sm text-white/60">No videos yet</p>
       </div>
     );

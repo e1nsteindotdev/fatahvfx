@@ -13,6 +13,9 @@ const config: Config = {
 			screens: {
 				'phone': "400px"
 			},
+			fontFamily: {
+				'script': ['Beneath', 'cursive'],
+			},
 			dropShadow: {
 				'video-glow': '0 0 28px rgba(0, 140, 255, 0.3)',
 				'title-glow': '0 0 28px rgba(255,255,255,0.48)'
