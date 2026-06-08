@@ -90,10 +90,13 @@ function DynamicCategory({
   }
 
   // Transform videos to the format expected by Category component
-  const videoUrls = videos.map((video) => ({
-    video: video.url || "",
-    thumbnail: "", // We'll use the video itself as thumbnail for now
-  }));
+  // Filter out videos where url is null (storageId missing/expired)
+  const videoUrls = videos
+    .filter((video) => !!video.url)
+    .map((video) => ({
+      video: video.url as string,
+      thumbnail: "",
+    }));
 
   return (
     <Category

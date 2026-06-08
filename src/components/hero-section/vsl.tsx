@@ -7,7 +7,7 @@ export function VSL() {
       <div className="px-2 flex-1">
         <CustomVideoPlayer
           src="/main-vsl.mp4"
-          poster="main-vsl-thumbnail.png"
+          poster="/main-vsl-thumbnail.png"
         />
       </div>
     </div>

@@ -11,19 +11,32 @@ export function CustomVideoPlayer({ src, poster }: CustomVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (!videoSrc) {
-        setVideoSrc(src);
-      }
-      if (isPlaying) {
-        videoRef.current.pause();
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isPlaying) {
+      video.pause();
+    } else {
+      setIsLoading(true);
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            setIsPlaying(true);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.error("Playback failed:", error);
+            setIsPlaying(false);
+            setIsLoading(false);
+          });
       } else {
-        videoRef.current.play();
+        setIsPlaying(true);
+        setIsLoading(false);
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -35,27 +48,53 @@ export function CustomVideoPlayer({ src, poster }: CustomVideoPlayerProps) {
   };
 
   return (
-    <div className="relative w-full h-full rounded-[32px] overflow-hidden">
-      {/* Video - Only loads when user clicks play */}
+    <div className="relative w-full h-full rounded-[32px] overflow-hidden bg-black/10">
+      {/* Video — preload="none" ensures no network request is made until play is clicked */}
       <video
         ref={videoRef}
-        src={videoSrc || undefined}
+        src={src || undefined}
         poster={poster}
         className="w-full h-full object-cover"
         preload="none"
+        onWaiting={() => setIsLoading(true)}
+        onPlaying={() => setIsLoading(false)}
+        onCanPlay={() => setIsLoading(false)}
+        onSeeked={() => setIsLoading(false)}
+        onError={() => {
+          setIsPlaying(false);
+          setIsLoading(false);
+        }}
         onEnded={() => {
           setIsPlaying(false);
-          setVideoSrc(null);
+          setIsLoading(false);
         }}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
       />
 
-      {/* Big Play Button - Center */}
-      {!isPlaying && !videoSrc && (
+      {/* Loading Spinner — shown while buffering / loading */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] z-10">
+          <div className="relative w-20 h-20">
+            {/* Outer ring */}
+            <div className="absolute inset-0 rounded-full border-4 border-white/10" />
+            {/* Spinning arc */}
+            <div
+              className="absolute inset-0 rounded-full border-4 border-transparent border-t-white animate-spin"
+            />
+            {/* Inner glow dot */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-white/60" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Big Play Button — shown before/after play, hidden while loading */}
+      {!isPlaying && !isLoading && (
         <button
           onClick={togglePlay}
-          className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors"
+          className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors z-10"
         >
           <div className="w-32 h-32 rounded-[40px] bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-2xl hover:scale-105 transition-transform">
             <svg
@@ -71,9 +110,9 @@ export function CustomVideoPlayer({ src, poster }: CustomVideoPlayerProps) {
         </button>
       )}
 
-      {/* Controls - Bottom, spaced out max */}
-      {isPlaying && (
-        <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center bg-gradient-to-t from-black/60 to-transparent">
+      {/* Controls — shown while playing */}
+      {isPlaying && !isLoading && (
+        <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center bg-gradient-to-t from-black/60 to-transparent z-10">
           <button
             onClick={togglePlay}
             className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
